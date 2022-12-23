@@ -1,0 +1,26 @@
+{
+  "name": "node-board",
+  "version": "1.0.0",
+  "description": "nodeJS board",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swogjs/nodeSampleBoard.git"
+  },
+  "keywords": [
+    "nodeJS",
+    "board"
+  ],
+  "author": "swogjs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/swogjs/nodeSampleBoard/issues"
+  },
+  "homepage": "https://github.com/swogjs/nodeSampleBoard#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
