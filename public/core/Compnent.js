@@ -21,8 +21,8 @@ export default class Component {
     initState() { return {} }
     mounted () {};
     template () { return ''; }
-    render () {
-      this.$el.innerHTML = this.template();
+    async render () {
+      this.$el.innerHTML = await this.template();
       this.mounted(); // render 후에 mounted가 실행 된다.
     }
     setEvent () {}

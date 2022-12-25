@@ -7,14 +7,9 @@ export default class Board extends Component {
         this.$state = {posts: ['item1', 'item2']};
     }
 
-    template() {
-        return `
-        <header data-component="header"></header>
-        <p></p>
-        <div class="container-fluid">
-            <div class="accordion" id="boardList" data-component="posts"></div>
-        </div>
-        `
+    async template() {
+        const html = await fetch('/views/board/board.html');
+        return html.text();
     }
     // mounted에서 자식 컴포넌트를 마운트 해줘야 한다.
     mounted() {
