@@ -23,6 +23,7 @@
   "homepage": "https://github.com/swogjs/nodeSampleBoard#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "lokijs": "^1.5.12",
     "nodemon": "^2.0.20"
   }
 }

@@ -11,6 +11,7 @@ switch(location.pathname) {
         new LoginForm(app);
         break;
     case '/board':
+    case '/board/':
         new Board(app);
         break;
     default:

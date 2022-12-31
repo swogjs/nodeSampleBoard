@@ -1,5 +1,15 @@
 <header data-component="header"></header>
 <p></p>
-<div class="container-fluid">
+<div class="container">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end fixed_layout_btn">
+        <button class="btn btn-outline-primary me-md-2" type="button">글쓰기</button>
+        <button type="button" class="btn btn-outline-secondary">초기화</button>
+    </div>
     <div class="accordion" id="boardList" data-component="posts"></div>
 </div>
+<style>
+    .fixed_layout_btn {
+        justify-content: flex-end!important;
+        display: flex!important;
+    }
+</style>

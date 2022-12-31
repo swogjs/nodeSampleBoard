@@ -4,7 +4,8 @@ import Posts from "./Posts.js";
 
 export default class Board extends Component {
     setup() {
-        this.$state = {posts: ['item1', 'item2']};
+        this.$state = {posts: []};
+        this.getPosts();
     }
 
     async template() {
@@ -18,6 +19,13 @@ export default class Board extends Component {
 
         new Header($header);
         new Posts($posts, this.$state);
+    }
+    async getPosts() {
+        const response = await fetch('/api/board/getPosts');
+        const data = await response.json();
+        console.log(data.payload)
+        this.setState({posts: data.payload});
+        console.log(this.$state)
     }
     setEvent() {}
 
