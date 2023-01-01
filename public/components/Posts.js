@@ -23,9 +23,16 @@ export default class Posts extends Component {
                 </button>
                 </h2>
                 <div id="item_${index}" class="accordion-collapse collapse" aria-labelledby="heading_${index}" data-bs-parent="#boardList">
-                <div class="accordion-body">
-                    ${post.contents}
-                </div>
+                    <div class="accordion-body">
+                        ${post.contents.replace(/\n/gi, '<br>')}
+                    </div>
+                    <div class="container">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end fixed_layout_btn">
+                            <button class="btn btn-outline-warning me-md-2 btn-sm" type="button" id="btnEdit" data-bs-toggle="modal" data-bs-target="#writeModal" data-bs-whatever="글수정" data-board-key="${post.$loki}">수정</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" id="btnDelete" data-board-key="${post.$loki}">삭제</button>
+                        </div>
+                    </div>
+                    <p></p>
                 </div>
             </div>
             `;
@@ -33,6 +40,20 @@ export default class Posts extends Component {
         `;
     }
     setEvent() {
-
+        this.addEvent('click', '#btnDelete' , async ({target})=>{
+            console.log(target.dataset.boardKey)
+            const response = await fetch('/api/board/deletePost', {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ '$loki': target.dataset.boardKey}),
+            });
+            if(response.ok) {
+                board.getPosts();
+            }else{
+                window.app.alert(response.text());
+            }
+        })
     }
 }

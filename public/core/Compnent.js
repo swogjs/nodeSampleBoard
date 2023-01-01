@@ -44,31 +44,35 @@ export default class Component {
         this.$el.addEventListener(eventType, fnEvent);
       }
       alert(msg) {
-        const toastHtml = `
-        <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100"
-          style="top: 0;position: absolute;height: 100%;left: 0;z-index: 9999;opacity: 0.7;background-color: #b1b1b1;"
-        >
-            <!-- Then put toasts within -->
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                    <strong class="me-auto">Alert</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body text-center">
-                    ${msg}
-                </div>
+        const alertModalHtml = `
+        <!-- Modal -->
+        <div class="modal fade" id="alertModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">
+                  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                  <strong class="me-auto">Alert</strong>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ${msg}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
             </div>
-        </div>        
+          </div>
+        </div>
         `;
-        const toastEl = document.querySelector('.toast');
-        if(!toastEl) {
-          document.querySelector('body').insertAdjacentHTML('afterbegin' , toastHtml);
-          document.querySelector('.toast').addEventListener('hidden.bs.toast', function ({target}) {
-            document.querySelector('.toast').parentNode.remove();
-            // document.querySelector('.toast').parentNode.setAttribute('style', 'top: 0;position: absolute;height: 100%;left: 0;z-index: -1;')
+        const alertModal = document.querySelector('#alertModal');
+        if(!alertModal) {
+          document.querySelector('body').insertAdjacentHTML('afterbegin' , alertModalHtml);
+          document.querySelector('#alertModal').addEventListener('hidden.bs.modal', function ({target}) {
+            document.querySelector('#alertModal').remove();
           })
-          bootstrap.Toast.getOrCreateInstance(document.querySelector('.toast')).show();
+          bootstrap.Modal.getOrCreateInstance(document.querySelector('#alertModal')).show();
         } 
         
       }

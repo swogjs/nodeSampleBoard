@@ -51,7 +51,7 @@ export default class Board extends Component {
         if(response.ok) {
             const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#writeModal'));
             modal.hide();
-            board.getPosts()
+            board.getPosts();
         } else {
             board.alert(response.text());
         }
