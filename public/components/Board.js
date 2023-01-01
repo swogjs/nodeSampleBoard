@@ -24,9 +24,7 @@ export default class Board extends Component {
     async getPosts() {
         const response = await fetch('/api/board/getPosts');
         const data = await response.json();
-        console.log(data.payload)
         this.setState({posts: data.payload});
-        console.log(this.$state)
     }
     async save({target}) {
         const subject = target.parentNode.parentNode.querySelector('#subject');
@@ -41,20 +39,45 @@ export default class Board extends Component {
             contents.focus();
             return;
         }
-        const response = await fetch('/api/board/addPost', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 'subject': subject.value, contents: contents.value}),
-        });
-        if(response.ok) {
-            const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#writeModal'));
-            modal.hide();
-            board.getPosts();
-        } else {
-            board.alert(response.text());
+        // Edit
+        if(target.dataset.boardKey != -1) {
+            const post = board.$state.posts.find(post=>post.$loki==target.dataset.boardKey);
+            post.subject = subject.value;
+            post.contents = contents.value;
+            const response = await fetch('/api/board/editPost', {
+                method: 'put',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            });
+            if(response.ok) {
+                const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#writeModal'));
+                modal.hide();
+                board.getPosts();
+            } else {
+                board.alert(response.text());
+            }
+        } 
+        // Add
+        else {
+            const post = { 'subject': subject.value, contents: contents.value};
+            const response = await fetch('/api/board/addPost', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            });
+            if(response.ok) {
+                const modal = bootstrap.Modal.getOrCreateInstance(document.querySelector('#writeModal'));
+                modal.hide();
+                board.getPosts();
+            } else {
+                board.alert(response.text());
+            }
         }
+        
 
     }
     setEvent() {
@@ -62,20 +85,30 @@ export default class Board extends Component {
 
         this.addEvent('show.bs.modal', '#writeModal', (event) => {
             // Button that triggered the modal
-            var button = event.relatedTarget
+            const button = event.relatedTarget
             // Extract info from data-bs-* attributes
-            var recipient = button.getAttribute('data-bs-whatever')
+            const recipient = button.getAttribute('data-bs-whatever')
             // If necessary, you could initiate an AJAX request here
             // and then do the updating in a callback.
             //
             // Update the modal's content.
-            var modalTitle = document.querySelector('#writeModal').querySelector('.modal-title')
-            var subject = document.querySelector('#writeModal').querySelector('.modal-body input')
-            var contents = document.querySelector('#writeModal').querySelector('.modal-body textarea')
-          
+            console.log(button.dataset.boardKey)
+            const modalTitle = document.querySelector('#writeModal').querySelector('.modal-title');
+            const subject = document.querySelector('#writeModal').querySelector('.modal-body input');
+            const contents = document.querySelector('#writeModal').querySelector('.modal-body textarea');
+            const btnSave = document.querySelector('#writeModal').querySelector('#btnSave');
+            
             modalTitle.textContent = recipient;
-            subject.value = '';
-            contents.value = '';
+            if(recipient == '글수정') {
+                const post = this.$state.posts.find(post=>post.$loki==button.dataset.boardKey);
+                subject.value = post.subject;
+                contents.value = post.contents;
+                btnSave.dataset['boardKey'] = button.dataset.boardKey;
+            } else {
+                subject.value = '';
+                contents.value = '';
+                btnSave.dataset['boardKey'] = -1;
+            }
           })
     }
 

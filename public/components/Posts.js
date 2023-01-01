@@ -41,7 +41,6 @@ export default class Posts extends Component {
     }
     setEvent() {
         this.addEvent('click', '#btnDelete' , async ({target})=>{
-            console.log(target.dataset.boardKey)
             const response = await fetch('/api/board/deletePost', {
                 method: 'delete',
                 headers: {
@@ -52,7 +51,7 @@ export default class Posts extends Component {
             if(response.ok) {
                 board.getPosts();
             }else{
-                window.app.alert(response.text());
+                board.alert(response.text());
             }
         })
     }
