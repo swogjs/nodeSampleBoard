@@ -13,10 +13,9 @@ export default class Posts extends Component {
             </figure>
             `
         }
-        return `
+        return `<p></p>
         ${posts.map((post, index)=>{
-            return `
-            <p></p>
+            return `            
             <div class="accordion-item">
                 <h2 class="accordion-header" id="heading_${index}">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#item_${index}" aria-expanded="true" aria-controls="item_${index}">

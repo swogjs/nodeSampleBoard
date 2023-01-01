@@ -1,15 +1,51 @@
 <header data-component="header"></header>
 <p></p>
+
 <div class="container">
     <div class="d-grid gap-2 d-md-flex justify-content-md-end fixed_layout_btn">
-        <button class="btn btn-outline-primary me-md-2" type="button">글쓰기</button>
-        <button type="button" class="btn btn-outline-secondary">초기화</button>
+        <button class="btn btn-outline-primary me-md-2" type="button" id="btnWrite" data-bs-toggle="modal" data-bs-target="#writeModal" data-bs-whatever="글쓰기">글쓰기</button>
+        <button type="button" class="btn btn-outline-secondary" id="btnTrancTable">초기화</button>
     </div>
     <div class="accordion" id="boardList" data-component="posts"></div>
+
+    <div class="modal fade" id="writeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">제목:</label>
+                <input type="text" class="form-control" id="subject">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">내용:</label>
+                <textarea class="form-control" id="contents" style="height:300px"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" id="btnSave">저장</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+
 </div>
 <style>
     .fixed_layout_btn {
         justify-content: flex-end!important;
         display: flex!important;
+    }
+    .msgAlert {
+        top: 0;
+        position: absolute;
+        height: 100%;
+        left: 0;
+        z-index: -1;
     }
 </style>

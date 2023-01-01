@@ -10,6 +10,7 @@ export default class Component {
       this.setup();
       this.setEvent();
       this.render();
+      window.app = this;
     }
     setup () {
         this.state = observable(this.initState()); // state를 관찰한다.
@@ -41,5 +42,34 @@ export default class Component {
             callback(event);
         }
         this.$el.addEventListener(eventType, fnEvent);
+      }
+      alert(msg) {
+        const toastHtml = `
+        <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center w-100"
+          style="top: 0;position: absolute;height: 100%;left: 0;z-index: 9999;opacity: 0.7;background-color: #b1b1b1;"
+        >
+            <!-- Then put toasts within -->
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    <strong class="me-auto">Alert</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-center">
+                    ${msg}
+                </div>
+            </div>
+        </div>        
+        `;
+        const toastEl = document.querySelector('.toast');
+        if(!toastEl) {
+          document.querySelector('body').insertAdjacentHTML('afterbegin' , toastHtml);
+          document.querySelector('.toast').addEventListener('hidden.bs.toast', function ({target}) {
+            document.querySelector('.toast').parentNode.remove();
+            // document.querySelector('.toast').parentNode.setAttribute('style', 'top: 0;position: absolute;height: 100%;left: 0;z-index: -1;')
+          })
+          bootstrap.Toast.getOrCreateInstance(document.querySelector('.toast')).show();
+        } 
+        
       }
   }
