@@ -88,11 +88,6 @@ export default class Board extends Component {
             const button = event.relatedTarget
             // Extract info from data-bs-* attributes
             const recipient = button.getAttribute('data-bs-whatever')
-            // If necessary, you could initiate an AJAX request here
-            // and then do the updating in a callback.
-            //
-            // Update the modal's content.
-            console.log(button.dataset.boardKey)
             const modalTitle = document.querySelector('#writeModal').querySelector('.modal-title');
             const subject = document.querySelector('#writeModal').querySelector('.modal-body input');
             const contents = document.querySelector('#writeModal').querySelector('.modal-body textarea');
