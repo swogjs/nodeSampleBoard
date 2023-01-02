@@ -1,6 +1,7 @@
 import Component from "../core/Compnent.js";
 import Header from "./Header.js";
 import Posts from "./Posts.js";
+import Pagination from "./PagiNation.js";
 
 export default class Board extends Component {
     setup() {
@@ -17,14 +18,23 @@ export default class Board extends Component {
     mounted() {
         const $header = this.$el.querySelector('[data-component="header"]');
         const $posts = this.$el.querySelector('[data-component="posts"]');
+        const $pagination = this.$el.querySelector('[data-component="pagination"]');
+
 
         new Header($header);
         new Posts($posts, this.$state);
+        new Pagination($pagination, this.$state);
     }
-    async getPosts() {
-        const response = await fetch('/api/board/getPosts');
+    async getPosts(page=1) {
+        const response = await fetch('/api/board/getPosts', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({page: page, pageSize: 5}),
+        });
         const data = await response.json();
-        this.setState({posts: data.payload});
+        this.setState({posts: data.payload , page: data.page, totalPage: data.totalPage});
     }
     async save({target}) {
         const subject = target.parentNode.parentNode.querySelector('#subject');

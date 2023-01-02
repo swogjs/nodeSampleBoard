@@ -17,8 +17,21 @@ function databaseInit() {
 
 boardService = {
     getPosts: (req, res) => {
+        const {page=1, pageSize=5} = req.body;
         const collection = db.addCollection('board');
-        res.json({status:200, payload: collection.data});
+        let totalPage = parseInt(collection.data.length/pageSize);
+        if(parseInt(collection.data.length%pageSize) > 0) {
+            totalPage++;
+        }
+        const startIndex = (page -1) * pageSize;
+        const endIndex = (startIndex + pageSize) -1 < pageSize ? pageSize: (startIndex + pageSize);
+        res.json({
+            status:200, 
+            payload: collection.chain().simplesort('$loki', true).data().slice(startIndex, endIndex), 
+            page: page, 
+            pageSize: pageSize, 
+            totalPage: totalPage
+        });
     },
 
     addPost: (req, res) => {
