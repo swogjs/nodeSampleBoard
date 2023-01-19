@@ -1,12 +1,17 @@
 const express = require('express');
 const path = require('path');
 const routes = require('./routes/page.js');
+const winston = require('./config/winston');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const app = express();
 app.set('port', process.env.PORT || 8001);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(morgan('combined', {stream: winston.stream}));
 
 app.use('/api', routes);
 

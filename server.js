@@ -1,5 +1,6 @@
 const app = require('./app');
+const winston = require('./config/winston');
 
 app.listen(app.get('port'), ()=>{
-    console.log(`${app.get('port')} 포트에서 대기중`)
+    winston.info(`${app.get('port')} 포트에서 대기중`);
 });

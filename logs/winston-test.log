@@ -1,0 +1,9 @@
+2023-01-19T12:38:28.651Z [winston-test] info: 8001 포트에서 대기중
+2023-01-19T12:38:40.800Z [winston-test] info: ::1 - - [19/Jan/2023:12:38:40 +0000] "GET /board HTTP/1.1" 304 - "http://localhost:8001/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+
+2023-01-19T12:38:41.027Z [winston-test] info: ::1 - - [19/Jan/2023:12:38:41 +0000] "POST /api/board/getPosts HTTP/1.1" 200 595 "http://localhost:8001/board" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+
+2023-01-19T12:38:41.066Z [winston-test] info: ::1 - - [19/Jan/2023:12:38:41 +0000] "GET /favicon.ico HTTP/1.1" 304 - "http://localhost:8001/board" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+
+2023-01-19T12:40:15.507Z [winston-test] info: ::1 - - [19/Jan/2023:12:40:15 +0000] "POST /api/board/getPosts HTTP/1.1" 200 589 "http://localhost:8001/board" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+
